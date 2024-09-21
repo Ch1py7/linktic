@@ -1,5 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
+  import FormCreateProduct from '@/components/admin/form-create-product.svelte'
   import FormCreateUser from '@/components/admin/form-create-user.svelte'
   import Navbar from '@/components/admin/navbar.svelte'
   import Card from '@/components/card.svelte'
@@ -23,7 +24,7 @@
     {#if $navigationAdmin.users}
       <FormCreateUser />
     {:else if $navigationAdmin.products}
-      <div></div>
+      <FormCreateProduct />
     {:else if $navigationAdmin.orders}
       <div></div>
     {/if}
