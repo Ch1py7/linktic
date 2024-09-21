@@ -1,5 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
+  import CartTable from '@/components/market/cart/cart-table.svelte'
   import Navbar from '@/components/market/navbar.svelte'
   import ProductVisualizer from '@/components/market/products/product-visualizer.svelte'
   import { getSession, removeSession } from '@/lib/storage'
@@ -20,7 +21,7 @@
   {#if $navigationMarket.products}
     <ProductVisualizer />
   {:else if $navigationMarket.cart}
-    <div></div>
+    <CartTable />
   {:else if $navigationMarket.orders}
     <div></div>
   {/if}

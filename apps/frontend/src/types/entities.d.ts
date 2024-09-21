@@ -1,16 +1,20 @@
 interface User {
-  name: string
+	name: string
 	email: string
 	password: string
 	role: Role
 }
 
 interface Product {
-  id?: number
+	id?: number
 	title: string
 	description: string
 	price: number
 	image: string
+}
+
+interface ProductQuantity extends Product {
+	quantity: number
 }
 
 interface ChangeEvent extends Event {
