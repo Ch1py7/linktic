@@ -19,10 +19,10 @@ router.post(
 	[
 		body('title')
 			.notEmpty()
-			.withMessage("title can't be empty")
+			.withMessage("product name can't be empty")
 			.bail()
 			.isString()
-			.withMessage('title should be a string')
+			.withMessage('product name should be a string')
 			.bail(),
 		body('description')
 			.notEmpty()
@@ -37,6 +37,12 @@ router.post(
 			.bail()
 			.isNumeric()
 			.withMessage('price should be a number')
+			.bail()
+			.custom(async (value) => {
+				if (value === 0) {
+					throw new Error("price can't be zero")
+				}
+			})
 			.bail(),
 		body('image').notEmpty().withMessage('image is required').bail(),
 	],
@@ -69,16 +75,16 @@ router.put(
 			.bail()
 			.custom(async (value) => {
 				if (value === 0) {
-					throw new Error("id can't be zero")
+					throw new Error("price can't be zero")
 				}
 			})
 			.bail(),
 		body('title')
 			.notEmpty()
-			.withMessage("title can't be empty")
+			.withMessage("product name can't be empty")
 			.bail()
 			.isString()
-			.withMessage('title should be a string')
+			.withMessage('product name should be a string')
 			.bail(),
 		body('description')
 			.notEmpty()
