@@ -9,3 +9,7 @@
   outline: none;
   background-attachment: fixed;
 }
+
+body {
+  background-color: #fbfbfb;
+}
