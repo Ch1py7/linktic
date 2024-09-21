@@ -18,7 +18,7 @@ export namespace Auth {
 		try {
 			const { data, error } = await client
 				.from('users')
-				.select('name, role, email')
+				.select('id, name, role, email')
 				.eq('email', email)
 				.eq('password', password)
 				.eq('role', role)

@@ -1,11 +1,19 @@
+import { verifyJwt } from '@/functions/jwt'
 import { create, delete_, getAll, update } from '@/functions/products'
 import express from 'express'
 import { body, validationResult } from 'express-validator'
 
 const router = express.Router()
 
-router.get('/products', async (_, res: express.Response) => {
+router.get('/products', async (req: express.Request, res: express.Response) => {
 	try {
+		const token = req.headers.authorization?.split(' ')[1] ?? ''
+		const payload = verifyJwt<{ sub: number; exp: number; role: 'admin' | 'user' }>(token)
+
+		if (Date.now() > payload.exp * 1000) {
+			return res.status(401).send(['token expired'])
+		}
+
 		const products = await getAll()
 
 		res.status(200).send(products)
@@ -47,16 +55,23 @@ router.post(
 		body('image').notEmpty().withMessage('image is required').bail(),
 	],
 	async (req: express.Request, res: express.Response) => {
-		const errors = validationResult(req)
-
-		if (!errors.isEmpty()) {
-			const error = errors.array().map((e) => e.msg)
-			return res.status(400).json(error)
-		}
-
-		const { title, description, price, image } = req.body
-
 		try {
+			const errors = validationResult(req)
+
+			if (!errors.isEmpty()) {
+				const error = errors.array().map((e) => e.msg)
+				return res.status(400).json(error)
+			}
+
+			const token = req.headers.authorization?.split(' ')[1] ?? ''
+			const payload = verifyJwt<{ sub: number; exp: number; role: 'admin' | 'user' }>(token)
+
+			if (Date.now() > payload.exp * 1000) {
+				return res.status(401).send(['token expired'])
+			}
+
+			const { title, description, price, image } = req.body
+
 			await create({ title, description, price, image })
 
 			res.status(201).send()
@@ -103,16 +118,23 @@ router.put(
 		body('image').notEmpty().withMessage('image is required'),
 	],
 	async (req: express.Request, res: express.Response) => {
-		const errors = validationResult(req)
-
-		if (!errors.isEmpty()) {
-			const error = errors.array().map((e) => e.msg)
-			return res.status(400).json(error)
-		}
-
-		const { id, title, description, price, image } = req.body
-
 		try {
+			const errors = validationResult(req)
+
+			if (!errors.isEmpty()) {
+				const error = errors.array().map((e) => e.msg)
+				return res.status(400).json(error)
+			}
+
+			const token = req.headers.authorization?.split(' ')[1] ?? ''
+			const payload = verifyJwt<{ sub: number; exp: number; role: 'admin' | 'user' }>(token)
+
+			if (Date.now() > payload.exp * 1000) {
+				return res.status(401).send(['token expired'])
+			}
+
+			const { id, title, description, price, image } = req.body
+
 			await update({ id, title, description, price, image })
 
 			res.status(200).send()
@@ -135,16 +157,23 @@ router.delete(
 		})
 		.bail(),
 	async (req: express.Request, res: express.Response) => {
-		const errors = validationResult(req)
-
-		if (!errors.isEmpty()) {
-			const error = errors.array().map((e) => e.msg)
-			return res.status(400).json(error)
-		}
-
-		const { id } = req.body
-
 		try {
+			const errors = validationResult(req)
+
+			if (!errors.isEmpty()) {
+				const error = errors.array().map((e) => e.msg)
+				return res.status(400).json(error)
+			}
+
+			const token = req.headers.authorization?.split(' ')[1] ?? ''
+			const payload = verifyJwt<{ sub: number; exp: number; role: 'admin' | 'user' }>(token)
+
+			if (Date.now() > payload.exp * 1000) {
+				return res.status(401).send(['token expired'])
+			}
+
+			const { id } = req.body
+
 			await delete_(id)
 
 			res.status(200).send()

@@ -1,4 +1,5 @@
 import { Supabase } from '@/supabase'
+import { signJwt } from './jwt'
 
 export const register = async (user: Register) => {
 	try {
@@ -10,8 +11,9 @@ export const register = async (user: Register) => {
 
 export const login = async (user: Login) => {
 	try {
-		const userData = await Supabase.auth.getByCredentials(user)
-    return userData
+		const { email, id, name, role } = await Supabase.auth.getByCredentials(user)
+		const token = signJwt({ sub: id, role })
+		return { email, name, token, role }
 	} catch (e) {
 		throw new Error((e as Error).message)
 	}

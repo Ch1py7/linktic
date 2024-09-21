@@ -1,25 +1,13 @@
+import { verifyJwt } from '@/functions/jwt'
 import { create, delete_, getAll } from '@/functions/orders'
-import { validateEmail } from '@/functions/utils'
 import express from 'express'
 import { body, query, validationResult } from 'express-validator'
 
 const router = express.Router()
 
 router
-	.get(
-		'/orders',
-		query('email')
-			.notEmpty()
-			.withMessage("email can't be empty")
-			.bail()
-			.isString()
-			.withMessage('email should be a string')
-			.bail()
-			.custom(async (value) => {
-				if (validateEmail(value)) throw new Error('incorrect email')
-			})
-			.bail(),
-		async (req: express.Request, res: express.Response) => {
+	.get('/orders', async (req: express.Request, res: express.Response) => {
+		try {
 			const errors = validationResult(req)
 
 			if (!errors.isEmpty()) {
@@ -27,27 +15,24 @@ router
 				return res.status(400).json(error)
 			}
 
-			const { email } = req.query
+			const token = req.headers.authorization?.split(' ')[1] ?? ''
+			const payload = verifyJwt<{ sub: number; exp: number; role: 'admin' | 'user' }>(token)
 
-			try {
-				const orders = await getAll(email!.toString())
-
-				res.status(200).send(orders)
-			} catch (e) {
-				res.status(400).send([(e as Error).message])
+			if (Date.now() > payload.exp * 1000) {
+				return res.status(401).send(['token expired'])
 			}
+
+			const orders = await getAll(payload.sub)
+
+			res.status(200).send(orders)
+		} catch (e) {
+			res.status(400).send([(e as Error).message])
 		}
-	)
+	})
 
 	.post(
 		'/order/create',
 		[
-			body('user_id')
-				.notEmpty()
-				.withMessage('user id is required')
-				.bail()
-				.isNumeric()
-				.withMessage('user id should be a number'),
 			body('products')
 				.isArray()
 				.withMessage('products should be an array')
@@ -61,17 +46,24 @@ router
 				}),
 		],
 		async (req: express.Request, res: express.Response) => {
-			const errors = validationResult(req)
-
-			if (!errors.isEmpty()) {
-				const error = errors.array().map((e) => e.msg)
-				return res.status(400).json(error)
-			}
-
-			const { products, user_id } = req.body
-
 			try {
-				await create({ products, user_id })
+				const errors = validationResult(req)
+
+				if (!errors.isEmpty()) {
+					const error = errors.array().map((e) => e.msg)
+					return res.status(400).json(error)
+				}
+
+				const token = req.headers.authorization?.split(' ')[1] ?? ''
+				const payload = verifyJwt<{ sub: number; exp: number; role: 'admin' | 'user' }>(token)
+
+				if (Date.now() > payload.exp * 1000) {
+					return res.status(401).send(['token expired'])
+				}
+
+				const { products } = req.body
+
+				await create({ products, user_id: payload.sub })
 
 				res.status(201).send()
 			} catch (e) {
@@ -94,16 +86,23 @@ router.delete(
 			if (value === '0') throw new Error("id can't be zero")
 		}),
 	async (req: express.Request, res: express.Response) => {
-		const errors = validationResult(req)
-
-		if (!errors.isEmpty()) {
-			const error = errors.array().map((e) => e.msg)
-			return res.status(400).json(error)
-		}
-
-		const { id } = req.query
-
 		try {
+			const errors = validationResult(req)
+
+			if (!errors.isEmpty()) {
+				const error = errors.array().map((e) => e.msg)
+				return res.status(400).json(error)
+			}
+
+			const token = req.headers.authorization?.split(' ')[1] ?? ''
+			const payload = verifyJwt<{ sub: number; exp: number; role: 'admin' | 'user' }>(token)
+
+			if (Date.now() > payload.exp * 1000) {
+				return res.status(401).send(['token expired'])
+			}
+
+			const { id } = req.query
+
 			await delete_(Number(id))
 
 			res.status(200).send()
