@@ -2,6 +2,7 @@
   import { goto } from '$app/navigation'
   import { Button, Card } from '@/components'
   import { login } from '@/lib/http-client/auth'
+  import { setSession } from '@/lib/storage'
 
   let credentials: Omit<User, 'name'> = {
     email: '',
@@ -14,6 +15,7 @@
   const onSumbit = async () => {
     try {
       const { data } = await login(credentials)
+      setSession(data)
       data.role === 'admin' && goto('/admin')
       data.role === 'user' && goto('/market')
     } catch (e) {
@@ -29,7 +31,7 @@
     {#if errors.length > 0}
       <div>
         {#each errors as error}
-          <p class="text-red-500 text-ellipsis">{error}</p>
+          <p class="text-red-500 font-semibold text-ellipsis">{error}</p>
         {/each}
       </div>
     {/if}
