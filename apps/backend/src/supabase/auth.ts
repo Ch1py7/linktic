@@ -26,7 +26,7 @@ export namespace Auth {
 			if (error) throw error
 			if (data.length === 0) throw new Error('User not found or incorrect credentials')
 
-			return data
+			return data[0]
 		} catch (e) {
 			throw new Error((e as Error).message)
 		}

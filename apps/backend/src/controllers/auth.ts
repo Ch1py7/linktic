@@ -103,7 +103,7 @@ router.post(
 		try {
 			const user = await login({ email, password, role })
 
-			res.status(201).send(user)
+			res.status(200).send(user)
 		} catch (e) {
 			res.status(400).send([(e as Error).message])
 		}
