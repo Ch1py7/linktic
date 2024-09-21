@@ -1,4 +1,5 @@
 import { login, register } from '@/functions/auth'
+import { validateEmail } from '@/functions/utils'
 import express from 'express'
 import { body, validationResult } from 'express-validator'
 
@@ -27,6 +28,10 @@ router.post(
 			.bail()
 			.isString()
 			.withMessage('email should be a string')
+			.bail()
+			.custom(async (value) => {
+				if (validateEmail(value)) throw new Error('incorrect email')
+			})
 			.bail(),
 		body('role')
 			.notEmpty()
@@ -72,6 +77,10 @@ router.post(
 			.bail()
 			.isString()
 			.withMessage('email should be a string')
+			.bail()
+			.custom(async (value) => {
+				if (validateEmail(value)) throw new Error('incorrect email')
+			})
 			.bail(),
 		body('role')
 			.notEmpty()
