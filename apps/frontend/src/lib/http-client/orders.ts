@@ -17,15 +17,34 @@ export const listOrders = async () => {
 	}
 }
 
-export const createOrder = async () => {
+export const createOrder = async (products: { product_id: number; quantity: number }[]) => {
 	try {
 		const { token } = getSession()
-		const { data, status } = await instance.post('/order/create', {
+		const { status } = await instance.post(
+			'/order/create',
+			{ products },
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		)
+		return { status }
+	} catch (e) {
+		const error = e as AxiosError
+		throw error.response?.data
+	}
+}
+
+export const cancelOrder = async (id: number) => {
+	try {
+		const { token } = getSession()
+		const { status } = await instance.delete(`/order/cancel?id=${id}`, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},
 		})
-		return { data, status }
+		return { status }
 	} catch (e) {
 		const error = e as AxiosError
 		throw error.response?.data

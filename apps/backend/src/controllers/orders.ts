@@ -37,6 +37,7 @@ router
 				.isArray()
 				.withMessage('products should be an array')
 				.custom(async (value: OrderProducts[]) => {
+          if (value.length === 0) throw new Error('send at least one product')
 					value.map((v) => {
 						if (v.product_id === 0) throw new Error("product id can't be 0")
 						if (typeof v.product_id !== 'number') throw new Error('product id should be a number')

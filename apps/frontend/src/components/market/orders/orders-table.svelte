@@ -30,16 +30,19 @@
     <table class="w-full">
       <thead>
         <tr class="border-b border-b-1 border-solid border-gray">
-          <th class="ps-2 pb-3">
+          <th class="ps-2 pb-3 w-36">
             <p class="font-semibold text-start text-gray-600">Order id</p>
           </th>
           <th class="ps-2 pb-3 w-72">
-            <p class="font-semibold text-center text-gray-600">Products</p>
+            <p class="font-semibold text-start text-gray-600">Products name</p>
           </th>
-          <th class="ps-2 pb-3 w-60">
-            <p class="font-semibold text-end text-gray-600">Status</p>
+          <th class="ps-2 pb-3 w-24">
+            <p class="font-semibold text-start text-gray-600">Products quantity</p>
           </th>
-          <th class="ps-2 pb-3 w-60"></th>
+          <th class="ps-2 pb-3">
+            <p class="font-semibold text-center text-gray-600">Status</p>
+          </th>
+          <th class="ps-2 pb-3"></th>
         </tr>
       </thead>
       <tbody>

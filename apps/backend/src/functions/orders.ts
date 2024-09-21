@@ -4,19 +4,21 @@ export const getAll = async (id: number) => {
 	try {
 		const orders = await Supabase.orders.getAll(id)
 
-		const order_products = orders.order_products.map((op) => {
+		const parsedOrders = orders.map((order) => {
 			return {
-				title: op.products!.title,
-				product_id: op.product_id,
-				quantity: op.quantity,
+				order_id: order.id,
+				status: order.status,
+				order_products: order.order_products.map((op) => {
+					return {
+						title: op.products!.title,
+						product_id: op.product_id,
+						quantity: op.quantity,
+					}
+				}),
 			}
 		})
 
-		return {
-			status: orders.status,
-			order_id: orders.id,
-			order_products,
-		}
+		return parsedOrders
 	} catch (e) {
 		throw new Error((e as Error).message)
 	}

@@ -1,10 +1,12 @@
 <script lang="ts">
   import Button from '@/components/button.svelte'
   import Card from '@/components/card.svelte'
-  import { getCart } from '@/lib/storage'
+  import { createOrder } from '@/lib/http-client/orders'
+  import { cleanCart, getCart } from '@/lib/storage'
   import { totals } from '@/lib/stores/totals'
   import { onMount } from 'svelte'
   import ProductTableRow from './product-table-row.svelte'
+  import { navigationMarket } from '@/lib/stores/navigation-market'
 
   let products: ProductQuantity[] = []
 
@@ -12,6 +14,31 @@
     const Products = getCart()
     products = Products
   })
+
+  const goToOrders = () => {
+    navigationMarket.set({
+      products: false,
+      orders: false,
+      cart: false,
+    })
+
+    navigationMarket.set({
+      ...$navigationMarket,
+      orders: true,
+    })
+  }
+
+  const sendOrder = async () => {
+    const order = products.map((p) => {
+      return { product_id: p.id!, quantity: p.quantity }
+    })
+    const { status } = await createOrder(order)
+    
+    if (status === 201) {
+      cleanCart()
+      goToOrders()
+    }
+  }
 </script>
 
 {#if products.length !== 0}
@@ -40,7 +67,7 @@
           $ {$totals.totalOrder.toLocaleString('en-US')}
         </p>
       </div>
-      <Button style={'bg-black text-white px-5 py-2 font-semibold'} on:click={() => {}}>
+      <Button style={'bg-black text-white px-5 py-2 font-semibold'} on:click={sendOrder}>
         Proceed to Order
       </Button>
     </div>

@@ -5,7 +5,7 @@ export namespace Products {
 		try {
 			const { data, error } = await client
 				.from('products')
-				.select('title, description, price, image')
+				.select('id, title, description, price, image')
 
 			if (error) throw error
 			if (!data) throw new Error('Product not found')

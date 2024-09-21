@@ -93,6 +93,10 @@ export const addProduct = (product: Product) => {
 	_setCartStorage(updatedCart)
 }
 
+export const cleanCart = () => {
+  _setCartStorage([])
+}
+
 export const restProduct = (product: Product) => {
 	const cart = getCart()
 	let updatedCart: ProductQuantity[]

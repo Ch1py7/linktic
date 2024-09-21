@@ -21,7 +21,7 @@ export namespace Orders {
 			if (!data || data.length === 0) throw new Error('Products not found')
 			if (error) throw error
 
-			return data[0]
+			return data
 		} catch (e) {
 			throw new Error((e as Error).message)
 		}
