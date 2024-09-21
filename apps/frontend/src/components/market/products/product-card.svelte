@@ -1,12 +1,17 @@
 <script lang="ts">
   import Button from '@/components/button.svelte'
   import Card from '@/components/card.svelte'
+  import { manageProducts } from '@/lib/storage'
 
   export let product: Product = {
     price: 0,
     image: '',
     description: '',
     title: '',
+  }
+
+  const onClick = (product: Product) => {
+    manageProducts({ ...product, quantity: 1 })
   }
 </script>
 
@@ -21,7 +26,10 @@
       <p>${product.price.toLocaleString('en-US')}</p>
     </div>
   </div>
-  <Button on:click={() => {}} style={'bg-black text-white flex justify-center relative'}>
+  <Button
+    on:click={() => onClick(product)}
+    style={'bg-black text-white flex justify-center relative'}
+  >
     Add to cart
   </Button>
 </Card>

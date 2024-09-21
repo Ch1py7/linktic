@@ -1,8 +1,15 @@
 <script lang="ts">
   import Card from '@/components/card.svelte'
+  import { getCart } from '@/lib/storage'
+  import { onMount } from 'svelte'
   import ProductTableRow from './product-table-row.svelte'
 
   let products: ProductQuantity[] = []
+
+  onMount(() => {
+    const Products = getCart()
+    products = Products
+  })
 </script>
 
 {#if products.length !== 0}
