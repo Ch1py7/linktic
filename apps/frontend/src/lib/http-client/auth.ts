@@ -1,0 +1,31 @@
+import axios, { type AxiosError } from 'axios'
+
+const instance = axios.create({
+	baseURL: 'http://localhost:8765/api',
+	headers: {
+		'Content-Type': 'application/json',
+	},
+})
+
+export const register = async (user: User) => {
+	try {
+		const { status } = await instance.post('/auth/register', JSON.stringify(user))
+		return { status }
+	} catch (e) {
+		const error = e as AxiosError
+		throw error.response?.data
+	}
+}
+
+export const login = async (user: Omit<User, 'name'>) => {
+	try {
+		const { data } = await instance.post<Omit<User, 'password'>>(
+			'/auth/login',
+			JSON.stringify(user)
+		)
+		return { data, status }
+	} catch (e) {
+		const error = e as AxiosError
+		throw error.response?.data
+	}
+}

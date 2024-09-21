@@ -1,17 +1,39 @@
 <script lang="ts">
+  import { goto } from '$app/navigation'
   import { Button, Card } from '@/components'
+  import { login } from '@/lib/http-client/auth'
 
-  let credentials: UserLogin = {
+  let credentials: Omit<User, 'name'> = {
     email: '',
     password: '',
     role: 'user',
   }
+
+  let errors: string[] = []
+
+  const onSumbit = async () => {
+    try {
+      const { data } = await login(credentials)
+      data.role === 'admin' && goto('/admin')
+      data.role === 'user' && goto('/market')
+    } catch (e) {
+      const error = e as string[]
+      errors = error
+    }
+  }
 </script>
 
 <div class="h-screen w-screen flex flex-col items-center justify-center">
-  <Card>
+  <Card style={'w-64'}>
     <h2 class="text-2xl font-semibold">Log In</h2>
-    <form on:submit|preventDefault={() => {}} class="flex flex-col gap-3">
+    {#if errors.length > 0}
+      <div>
+        {#each errors as error}
+          <p class="text-red-500 text-ellipsis">{error}</p>
+        {/each}
+      </div>
+    {/if}
+    <form on:submit|preventDefault={onSumbit} class="flex flex-col gap-3">
       <input
         bind:value={credentials.email}
         placeholder="Email"
@@ -19,6 +41,7 @@
         class="border border-1 border-solid border-gray-400 rounded-md px-2 py-1"
       />
       <input
+        type="password"
         bind:value={credentials.password}
         placeholder="Password"
         id="password"

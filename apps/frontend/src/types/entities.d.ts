@@ -1,10 +1,4 @@
-interface UserLogin {
-	email: string
-	password: string
-	role: Role
-}
-
-interface UserRegister {
+interface User {
   name: string
 	email: string
 	password: string
