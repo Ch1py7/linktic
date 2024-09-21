@@ -6,6 +6,7 @@ const main = async () => {
 		await import('module-alias/register')
 	}
 	const { router: auth } = await import('@/controllers/auth')
+	const { router: products } = await import('@/controllers/products')
 
 	const port = process.env.PORT || 8000
 	const app = express()
@@ -15,6 +16,7 @@ const main = async () => {
 	app.use(express.urlencoded({ extended: true }))
 
 	app.use('/api', auth)
+	app.use('/api', products)
 
 	app.listen(port, () => {
 		console.log(`Server running on port ${port}`)
