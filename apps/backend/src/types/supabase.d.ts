@@ -9,28 +9,58 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      cart: {
+      order_products: {
         Row: {
-          created_at: string
+          order_id: number
+          product_id: number
+          quantity: number
+        }
+        Insert: {
+          order_id: number
+          product_id: number
+          quantity: number
+        }
+        Update: {
+          order_id?: number
+          product_id?: number
+          quantity?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_products_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_products_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
           id: number
           status: boolean
           user_id: number
         }
         Insert: {
-          created_at?: string
           id?: number
           status?: boolean
           user_id: number
         }
         Update: {
-          created_at?: string
           id?: number
           status?: boolean
           user_id?: number
         }
         Relationships: [
           {
-            foreignKeyName: "cart_user_id_fkey"
+            foreignKeyName: "orders_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"

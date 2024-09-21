@@ -16,6 +16,7 @@ export const create = async (product: Product) => {
 		throw new Error((e as Error).message)
 	}
 }
+
 export const update = async (product: Product) => {
 	try {
 		await Supabase.products.update(product)
