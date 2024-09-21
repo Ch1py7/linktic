@@ -1,11 +1,5 @@
-import axios, { type AxiosError } from 'axios'
-
-const instance = axios.create({
-	baseURL: 'http://localhost:8765/api',
-	headers: {
-		'Content-Type': 'application/json',
-	},
-})
+import type { AxiosError } from 'axios'
+import { instance } from './axiosInstance'
 
 export const register = async (user: User) => {
 	try {
