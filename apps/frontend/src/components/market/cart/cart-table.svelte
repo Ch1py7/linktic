@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { Button } from '@/components'
+  import Button from '@/components/button.svelte'
   import Card from '@/components/card.svelte'
   import { getCart } from '@/lib/storage'
+  import { totals } from '@/lib/stores/totals'
   import { onMount } from 'svelte'
   import ProductTableRow from './product-table-row.svelte'
-  import { totals } from '@/lib/stores/totals'
 
   let products: ProductQuantity[] = []
 

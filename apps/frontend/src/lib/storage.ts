@@ -1,19 +1,22 @@
 import { manageTotals } from './utils'
 
-export const setSession = (user: Omit<User, 'password' | 'name'>) => {
-	sessionStorage.setItem('role', user.role)
-	sessionStorage.setItem('email', user.email)
+export const setSession = (user: Omit<User, 'password' | 'name'> & { token: string }) => {
+	localStorage.setItem('role', user.role)
+	localStorage.setItem('email', user.email)
+	localStorage.setItem('token', user.token)
 }
 
 export const getSession = () => {
-	const email = sessionStorage.getItem('email')
-	const role = sessionStorage.getItem('role')
-	return { email, role }
+	const email = localStorage.getItem('email')
+	const role = localStorage.getItem('role')
+	const token = localStorage.getItem('token')
+	return { email, role, token }
 }
 
 export const removeSession = () => {
-	sessionStorage.removeItem('role')
-	sessionStorage.removeItem('email')
+	localStorage.removeItem('role')
+	localStorage.removeItem('email')
+	localStorage.removeItem('token')
 }
 
 const cartStorageName = 'CartStorageData'
@@ -45,7 +48,7 @@ export const getCart = (): ProductQuantity[] => {
 	}
 
 	const cart = JSON.parse(rawCart) as ProductQuantity[]
-  
+
 	return cart
 }
 

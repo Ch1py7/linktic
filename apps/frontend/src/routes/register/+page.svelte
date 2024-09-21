@@ -1,6 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import { Button, Card } from '@/components'
+  import Button from '@/components/button.svelte'
+  import Card from '@/components/card.svelte'
   import { register } from '@/lib/http-client/auth'
 
   let credentials: User = {

@@ -1,7 +1,6 @@
 <script lang="ts">
   import Card from '@/components/card.svelte'
   import { listOrders } from '@/lib/http-client/orders'
-  import { getSession } from '@/lib/storage'
   import { onMount } from 'svelte'
   import OrderTableRow from './order-table-row.svelte'
 
@@ -9,12 +8,11 @@
   let error = ''
 
   const getOrders = async () => {
-    const { email } = getSession()
-    const { data, status } = await listOrders(email!)
+    const { data, status } = await listOrders()
     if (status === 200) {
       orders = data
     } else {
-      error = 'Problem to fetch products'
+      error = 'Problem to retrieve products'
     }
   }
 

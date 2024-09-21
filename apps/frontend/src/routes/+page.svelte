@@ -1,6 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import { Button, Card } from '@/components'
+  import Button from '@/components/button.svelte'
+  import Card from '@/components/card.svelte'
   import { login } from '@/lib/http-client/auth'
   import { getSession, setSession } from '@/lib/storage'
   import { onMount } from 'svelte'
