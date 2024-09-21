@@ -17,13 +17,28 @@ router.get('/products', async (_, res: express.Response) => {
 router.post(
 	'/products/create',
 	[
-		body('title').notEmpty().withMessage("title can't be empty"),
-		body('title').isString().withMessage('title should be a string'),
-		body('description').notEmpty().withMessage("description can't be empty"),
-		body('description').isString().withMessage('description should be a string'),
-		body('price').notEmpty().withMessage('price is required'),
-		body('price').isNumeric().withMessage('price should be a number'),
-		body('image').notEmpty().withMessage('image is required'),
+		body('title')
+			.notEmpty()
+			.withMessage("title can't be empty")
+			.bail()
+			.isString()
+			.withMessage('title should be a string')
+			.bail(),
+		body('description')
+			.notEmpty()
+			.withMessage("description can't be empty")
+			.bail()
+			.isString()
+			.withMessage('description should be a string')
+			.bail(),
+		body('price')
+			.notEmpty()
+			.withMessage('price is required')
+			.bail()
+			.isNumeric()
+			.withMessage('price should be a number')
+			.bail(),
+		body('image').notEmpty().withMessage('image is required').bail(),
 	],
 	async (req: express.Request, res: express.Response) => {
 		const errors = validationResult(req)
@@ -48,18 +63,37 @@ router.post(
 router.put(
 	'/products/update',
 	[
-		body('id').notEmpty().withMessage('id is required'),
-		body('id').custom(async (value) => {
-			if (value === 0) {
-				throw new Error("id can't be zero")
-			}
-		}),
-		body('title').notEmpty().withMessage("title can't be empty"),
-		body('title').isString().withMessage('title should be a string'),
-		body('description').notEmpty().withMessage("description can't be empty"),
-		body('description').isString().withMessage('description should be a string'),
-		body('price').notEmpty().withMessage('price is required'),
-		body('price').isNumeric().withMessage('price should be a number'),
+		body('id')
+			.notEmpty()
+			.withMessage('id is required')
+			.bail()
+			.custom(async (value) => {
+				if (value === 0) {
+					throw new Error("id can't be zero")
+				}
+			})
+			.bail(),
+		body('title')
+			.notEmpty()
+			.withMessage("title can't be empty")
+			.bail()
+			.isString()
+			.withMessage('title should be a string')
+			.bail(),
+		body('description')
+			.notEmpty()
+			.withMessage("description can't be empty")
+			.bail()
+			.isString()
+			.withMessage('description should be a string')
+			.bail(),
+		body('price')
+			.notEmpty()
+			.withMessage('price is required')
+			.bail()
+			.isNumeric()
+			.withMessage('price should be a number')
+			.bail(),
 		body('image').notEmpty().withMessage('image is required'),
 	],
 	async (req: express.Request, res: express.Response) => {
@@ -84,12 +118,16 @@ router.put(
 
 router.delete(
 	'/products/delete',
-	body('id').notEmpty().withMessage('id is required'),
-	body('id').custom(async (value) => {
-		if (value === 0) {
-			throw new Error("id can't be zero")
-		}
-	}),
+	body('id')
+		.notEmpty()
+		.withMessage('id is required')
+		.bail()
+		.custom(async (value) => {
+			if (value === 0) {
+				throw new Error("id can't be zero")
+			}
+		})
+		.bail(),
 	async (req: express.Request, res: express.Response) => {
 		const errors = validationResult(req)
 

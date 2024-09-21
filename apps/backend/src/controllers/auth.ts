@@ -7,11 +7,34 @@ const router = express.Router()
 router.post(
 	'/auth/register',
 	[
-		body('name').notEmpty().withMessage("name can't be empty"),
-		body('password').notEmpty().withMessage("password can't be empty"),
-		body('email').notEmpty().withMessage("email can't be empty"),
-		body('role').notEmpty().withMessage("role can't be empty"),
-		body('role').isIn(['user', 'admin']).withMessage("role can't be different from user or admin"),
+		body('name')
+			.notEmpty()
+			.withMessage("name can't be empty")
+			.bail()
+			.isString()
+			.withMessage('name should be a string')
+			.bail(),
+		body('password')
+			.notEmpty()
+			.withMessage("password can't be empty")
+			.bail()
+			.isString()
+			.withMessage('password should be a string')
+			.bail(),
+		body('email')
+			.notEmpty()
+			.withMessage("email can't be empty")
+			.bail()
+			.isString()
+			.withMessage('email should be a string')
+			.bail(),
+		body('role')
+			.notEmpty()
+			.withMessage("role can't be empty")
+			.bail()
+			.isIn(['user', 'admin'])
+			.withMessage("role can't be different from user or admin")
+			.bail(),
 	],
 	async (req: express.Request, res: express.Response) => {
 		const errors = validationResult(req)
@@ -36,10 +59,27 @@ router.post(
 router.post(
 	'/auth/login',
 	[
-		body('password').notEmpty().withMessage("password can't be empty"),
-		body('email').notEmpty().withMessage("email can't be empty"),
-		body('role').notEmpty().withMessage("role can't be empty"),
-		body('role').isIn(['user', 'admin']).withMessage("role can't be different from user or admin"),
+		body('password')
+			.notEmpty()
+			.withMessage("password can't be empty")
+			.bail()
+			.isString()
+			.withMessage('password should be a string')
+			.bail(),
+		body('email')
+			.notEmpty()
+			.withMessage("email can't be empty")
+			.bail()
+			.isString()
+			.withMessage('email should be a string')
+			.bail(),
+		body('role')
+			.notEmpty()
+			.withMessage("role can't be empty")
+			.bail()
+			.isIn(['user', 'admin'])
+			.withMessage("role can't be different from user or admin")
+			.bail(),
 	],
 	async (req: express.Request, res: express.Response) => {
 		const errors = validationResult(req)
