@@ -7,6 +7,7 @@ export namespace Orders {
 				.from('orders')
 				.select(`
             status,
+            id,
             order_products (
               quantity,
               product_id,
@@ -16,12 +17,11 @@ export namespace Orders {
             )
           `)
 				.eq('user_id', id)
-        .single()
 
 			if (error) throw error
-			if (!data) throw new Error('Products not found')
+			if (!data ) throw new Error('Products not found')
 
-			return data
+			return data[0]
 		} catch (e) {
 			throw new Error((e as Error).message)
 		}

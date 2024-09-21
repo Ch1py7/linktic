@@ -43,4 +43,17 @@ export namespace Auth {
 			throw new Error((e as Error).message)
 		}
 	}
+
+	export const getUserIdByEmail = async (email: string) => {
+		try {
+			const { data, error } = await client.from('users').select('id').eq('email', email)
+
+			if (error) throw error
+			if (data.length === 0) throw new Error('Email not found')
+
+			return data[0]
+		} catch (e) {
+			throw new Error((e as Error).message)
+		}
+	}
 }

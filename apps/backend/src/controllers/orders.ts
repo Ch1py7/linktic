@@ -1,4 +1,5 @@
 import { create, delete_, getAll } from '@/functions/orders'
+import { validateEmail } from '@/functions/utils'
 import express from 'express'
 import { body, query, validationResult } from 'express-validator'
 
@@ -7,17 +8,17 @@ const router = express.Router()
 router
 	.get(
 		'/orders',
-		query('id')
+		query('email')
 			.notEmpty()
-			.withMessage('id is required')
+			.withMessage("email can't be empty")
 			.bail()
-			.isNumeric()
-			.withMessage('id should be a number')
+			.isString()
+			.withMessage('email should be a string')
 			.bail()
 			.custom(async (value) => {
-				if (value === 0) throw new Error("id can't be zero")
-				if (value === '0') throw new Error("id can't be zero")
-			}),
+				if (validateEmail(value)) throw new Error('incorrect email')
+			})
+			.bail(),
 		async (req: express.Request, res: express.Response) => {
 			const errors = validationResult(req)
 
@@ -26,10 +27,10 @@ router
 				return res.status(400).json(error)
 			}
 
-			const { id } = req.query
+			const { email } = req.query
 
 			try {
-				const orders = await getAll(Number(id))
+				const orders = await getAll(email!.toString())
 
 				res.status(200).send(orders)
 			} catch (e) {

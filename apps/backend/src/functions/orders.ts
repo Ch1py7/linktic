@@ -1,12 +1,13 @@
 import { Supabase } from '@/supabase'
 
-export const getAll = async (id: number) => {
+export const getAll = async (email: string) => {
 	try {
+    const { id } = await Supabase.auth.getUserIdByEmail(email)
 		const orders = await Supabase.orders.getAll(id)
 
 		const order_products = orders.order_products.map((op) => {
 			return {
-				title: op.products?.title,
+				title: op.products!.title,
 				product_id: op.product_id,
 				quantity: op.quantity,
 			}
@@ -14,6 +15,7 @@ export const getAll = async (id: number) => {
 
 		return {
 			status: orders.status,
+      order_id: orders.id,
 			order_products,
 		}
 	} catch (e) {
