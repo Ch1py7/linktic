@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { goto } from '$app/navigation'
+  import { removeSession } from '@/lib/storage'
   import { navigationAdmin } from '@/lib/stores/navigation-admin'
   const onClick = (event: Event) => {
     const { name } = event.target as HTMLButtonElement
@@ -12,6 +14,11 @@
       ...$navigationAdmin,
       [name]: true,
     })
+  }
+
+  const logOut = () => {
+    removeSession()
+    goto('/')
   }
 </script>
 
@@ -31,6 +38,9 @@
       class={`font-semibold py-1 px-3 rounded-md ${$navigationAdmin.orders ? 'text-black bg-white' : 'text-gray-600'}`}
     >
       <button name="orders" on:click={onClick}>Manage Orders</button>
+    </li>
+    <li class="font-semibold py-1 px-3 rounded-md text-red-500">
+      <button on:click={logOut}>Log Out</button>
     </li>
   </ul>
 </div>

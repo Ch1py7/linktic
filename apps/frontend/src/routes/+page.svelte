@@ -2,7 +2,8 @@
   import { goto } from '$app/navigation'
   import { Button, Card } from '@/components'
   import { login } from '@/lib/http-client/auth'
-  import { setSession } from '@/lib/storage'
+  import { getSession, setSession } from '@/lib/storage'
+  import { onMount } from 'svelte'
 
   let credentials: Omit<User, 'name'> = {
     email: '',
@@ -23,6 +24,14 @@
       errors = error
     }
   }
+
+  onMount(() => {
+    const { email, role } = getSession()
+    if (email !== null && email !== undefined) {
+      role === 'user' && goto('/market')
+      role === 'admin' && goto('/admin')
+    }
+  })
 </script>
 
 <div class="h-screen w-screen flex flex-col items-center justify-center">
