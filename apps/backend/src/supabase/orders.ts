@@ -18,8 +18,8 @@ export namespace Orders {
           `)
 				.eq('user_id', id)
 
+			if (!data || data.length === 0) throw new Error('Products not found')
 			if (error) throw error
-			if (!data ) throw new Error('Products not found')
 
 			return data[0]
 		} catch (e) {
