@@ -2,6 +2,7 @@
   import Button from '@/components/button.svelte'
   import Card from '@/components/card.svelte'
   import { manageProducts } from '@/lib/storage'
+  import { totals } from '@/lib/stores/totals'
 
   export let product: Product = {
     price: 0,
@@ -31,5 +32,12 @@
     style={'bg-black text-white flex justify-center relative'}
   >
     Add to cart
+    {#if $totals.individualTotal.find((p) => p.title === product.title && p.quantity > 0)}
+      <span
+        class="bg-white w-6 h-6 rounded-full text-center text-black font-bold pointer-events-none absolute right-4"
+      >
+        {$totals.individualTotal.find((p) => p.title === product.title)?.quantity}
+      </span>
+    {/if}
   </Button>
 </Card>

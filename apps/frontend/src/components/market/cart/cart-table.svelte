@@ -1,8 +1,10 @@
 <script lang="ts">
+  import { Button } from '@/components'
   import Card from '@/components/card.svelte'
   import { getCart } from '@/lib/storage'
   import { onMount } from 'svelte'
   import ProductTableRow from './product-table-row.svelte'
+  import { totals } from '@/lib/stores/totals'
 
   let products: ProductQuantity[] = []
 
@@ -31,6 +33,17 @@
         <ProductTableRow bind:products />
       </tbody>
     </table>
+    <div class="mt-4 flex justify-between items-center">
+      <div class="flex flex-col">
+        <p class="font-semibold text-gray-600">Subtotal</p>
+        <p class="font-semibold">
+          $ {$totals.totalOrder.toLocaleString('en-US')}
+        </p>
+      </div>
+      <Button style={'bg-black text-white px-5 py-2 font-semibold'} on:click={() => {}}>
+        Proceed to Order
+      </Button>
+    </div>
   </Card>
 {:else}
   <Card>

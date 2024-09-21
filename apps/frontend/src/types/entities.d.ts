@@ -13,6 +13,18 @@ interface Product {
 	image: string
 }
 
+interface Orders {
+	status: boolean
+	order_id: number
+	order_products: OrderProducts[]
+}
+
+interface OrderProducts {
+	title: string
+	product_id: number
+	quantity: number
+}
+
 interface ProductQuantity extends Product {
 	quantity: number
 }

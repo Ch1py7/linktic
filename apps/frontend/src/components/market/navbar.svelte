@@ -2,6 +2,7 @@
   import { goto } from '$app/navigation'
   import { removeSession } from '@/lib/storage'
   import { navigationMarket } from '@/lib/stores/navigation-market'
+  import { totals } from '@/lib/stores/totals'
   import Icon from '@iconify/svelte'
 
   const onClick = (event: Event) => {
@@ -44,6 +45,11 @@
         <span class="pointer-events-none button-icon">
           <Icon height="16px" icon={'bi:cart'} />
         </span>
+        {#if $totals.totalProducts}
+          <span class="bg-red-700 w-6 h-6 rounded-full text-center text-white pointer-events-none">
+            {$totals.totalProducts > 9 ? '+9' : $totals.totalProducts}
+          </span>
+        {/if}
       </button>
     </li>
     <li

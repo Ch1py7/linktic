@@ -1,3 +1,5 @@
+import { manageTotals } from './utils'
+
 export const setSession = (user: Omit<User, 'password' | 'name'>) => {
 	sessionStorage.setItem('role', user.role)
 	sessionStorage.setItem('email', user.email)
@@ -31,6 +33,8 @@ export const createCart = () => {
 
 const _setCartStorage = (cart: ProductQuantity[]) => {
 	localStorage.setItem(cartStorageName, JSON.stringify(cart))
+
+	manageTotals(cart)
 }
 
 export const getCart = (): ProductQuantity[] => {
@@ -41,7 +45,7 @@ export const getCart = (): ProductQuantity[] => {
 	}
 
 	const cart = JSON.parse(rawCart) as ProductQuantity[]
-
+  
 	return cart
 }
 
