@@ -1,5 +1,6 @@
-import { login, register } from '@/functions/auth'
-import { validateEmail } from '@/functions/utils'
+import { login } from '@/functions/auth/login'
+import { register } from '@/functions/auth/register'
+import { validateEmail } from '@/functions/utils/validators'
 import express from 'express'
 import { body, validationResult } from 'express-validator'
 

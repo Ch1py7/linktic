@@ -1,5 +1,8 @@
-import { verifyJwt } from '@/functions/jwt'
-import { create, delete_, getAll, update } from '@/functions/orders'
+import { cancel } from '@/functions/orders/cancel-order'
+import { create } from '@/functions/orders/create-order'
+import { get } from '@/functions/orders/get-order'
+import { update } from '@/functions/orders/update-order'
+import { verifyJwt } from '@/functions/service/jwt'
 import express from 'express'
 import { body, query, validationResult } from 'express-validator'
 
@@ -21,12 +24,12 @@ router.get('/orders', async (req: express.Request, res: express.Response) => {
 			return res.status(401).send(['token expired'])
 		}
 
-		let orders: Orders[]
+		let orders: ParsedOrders[]
 
 		if (payload.role === 'user') {
-			orders = await getAll(payload.sub)
+			orders = await get(payload.sub)
 		} else if (payload.role === 'admin') {
-			orders = await getAll()
+			orders = await get()
 		} else {
 			return res.status(401)
 		}
@@ -111,7 +114,7 @@ router.delete(
 
 			const { id } = req.query
 
-			await delete_(Number(id))
+			await cancel(Number(id))
 
 			res.status(200).send()
 		} catch (e) {
@@ -161,7 +164,7 @@ router.put(
 
 export { router }
 
-interface Orders {
+interface ParsedOrders {
 	order_id: number
 	status: boolean
 	order_products: {

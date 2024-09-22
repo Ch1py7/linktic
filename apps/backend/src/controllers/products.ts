@@ -1,7 +1,10 @@
-import { verifyJwt } from '@/functions/jwt'
-import { create, delete_, getAll, update } from '@/functions/products'
+import { cancel } from '@/functions/products/cancel-product'
+import { create } from '@/functions/products/create-product'
+import { get } from '@/functions/products/get-product'
+import { update } from '@/functions/products/update-product'
+import { verifyJwt } from '@/functions/service/jwt'
 import express from 'express'
-import { body, query, validationResult } from 'express-validator'
+import { body, validationResult } from 'express-validator'
 import multer from 'multer'
 
 const storage = multer.memoryStorage()
@@ -18,7 +21,7 @@ router.get('/products', async (req: express.Request, res: express.Response) => {
 			return res.status(401).send(['token expired'])
 		}
 
-		const products = await getAll()
+		const products = await get()
 
 		res.status(200).send(products)
 	} catch (e) {
@@ -157,7 +160,7 @@ router.put(
 
 			const { id } = req.body
 
-			await delete_(Number(id))
+			await cancel(Number(id))
 
 			res.status(200).send()
 		} catch (e) {

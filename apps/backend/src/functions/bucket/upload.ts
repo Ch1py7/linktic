@@ -1,6 +1,6 @@
 import { client } from '@/supabase/config/client'
 
-export const uploadFile = async (productName: string, file: Express.Multer.File) => {
+export const upload = async (productName: string, file: Express.Multer.File) => {
 	const { data, error } = await client.storage
 		.from('products')
 		.upload(`public/products/${productName}`, file.buffer, {

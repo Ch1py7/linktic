@@ -1,5 +1,7 @@
-import { verifyJwt } from '@/functions/jwt'
-import { delete_, getAll, update } from '@/functions/users'
+import { verifyJwt } from '@/functions/service/jwt'
+import { cancel } from '@/functions/users/cancel-user'
+import { get } from '@/functions/users/get-user'
+import { update } from '@/functions/users/update-user'
 import express from 'express'
 import { body, query, validationResult } from 'express-validator'
 
@@ -14,7 +16,7 @@ router.get('/users', async (req: express.Request, res: express.Response) => {
 			return res.status(401).send(['token expired'])
 		}
 
-		const users = await getAll()
+		const users = await get()
 
 		res.status(200).send(users)
 	} catch (e) {
@@ -53,7 +55,7 @@ router.delete(
 
 			const { id } = req.query
 
-			await delete_(Number(id))
+			await cancel(Number(id))
 
 			res.status(200).send()
 		} catch (e) {

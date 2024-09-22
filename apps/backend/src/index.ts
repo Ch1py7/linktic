@@ -1,5 +1,7 @@
 import cors from 'cors'
 import express from 'express'
+import dotenv from 'dotenv'
+dotenv.config()
 
 const main = async () => {
 	if (process.env.NODE_ENV === 'production') {
@@ -23,6 +25,7 @@ const main = async () => {
 	app.use('/api', users)
 
 	app.listen(port, () => {
+    console.log(process.env.SUPABASE_URL)
 		console.log(`Server running on port ${port}`)
 	})
 
