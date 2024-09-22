@@ -25,6 +25,12 @@ const main = async () => {
 	app.listen(port, () => {
 		console.log(`Server running on port ${port}`)
 	})
+
+	app.get('/', (req, res) => {
+		const url = `${req.protocol}://${req.get('host')}`
+		console.log(`Server running on URL: ${url}`)
+		res.send(`Server running on URL: ${url}`)
+	})
 }
 
 main()
