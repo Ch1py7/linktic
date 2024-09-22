@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "pnpm --recursive dev"
-  },
+		"lint": "biome check . --apply",
+		"format": "biome format --write .",
+		"lint:check": "biome check .",
+		"format:check": "biome format ."
+	},
   "keywords": [],
   "author": "",
   "license": "ISC",
