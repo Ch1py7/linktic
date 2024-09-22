@@ -13,7 +13,7 @@ const main = async () => {
 	const port = process.env.PORT || 8000
 	const app = express()
 
-	app.use(cors({ origin: '*' }))
+	app.use(cors())
 	app.use(express.json())
 	app.use(express.urlencoded({ extended: true }))
 
