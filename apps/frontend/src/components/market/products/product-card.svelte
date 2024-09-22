@@ -11,8 +11,6 @@
     title: '',
   }
 
-  console.log(product)
-
   const onClick = (product: Product) => {
     manageProducts({ ...product, quantity: 1 })
   }

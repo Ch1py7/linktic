@@ -4,16 +4,40 @@
   import { navigationAdmin } from '@/lib/stores/navigation-admin'
   const onClick = (event: Event) => {
     const { name } = event.target as HTMLButtonElement
+    const wkNames = name as 'users' | 'products' | 'orders'
+
     navigationAdmin.set({
-      users: false,
-      products: false,
-      orders: false,
+      users: {
+        state: false,
+        subnavigation: {
+          create: false,
+          list: false,
+        },
+      },
+      products: {
+        state: false,
+        subnavigation: {
+          create: false,
+          list: false,
+        },
+      },
+      orders: {
+        state: false,
+      },
     })
 
     navigationAdmin.set({
       ...$navigationAdmin,
-      [name]: true,
+      [wkNames]: {
+        ...$navigationAdmin[wkNames],
+        state: true,
+        subnavigation: {
+          create: false,
+          list: true
+        }
+      },
     })
+
   }
 
   const logOut = () => {
@@ -25,17 +49,17 @@
 <div class="bg-gray-200 rounded-lg py-2 flex justify-center px-2">
   <ul class="flex gap-4">
     <li
-      class={`font-semibold py-1 px-3 rounded-md ${$navigationAdmin.users ? 'text-black bg-white' : 'text-gray-600'}`}
+      class={`font-semibold py-1 px-3 rounded-md ${$navigationAdmin.users.state ? 'text-black bg-white' : 'text-gray-600'}`}
     >
       <button name="users" on:click={onClick}>Manage Users</button>
     </li>
     <li
-      class={`font-semibold py-1 px-3 rounded-md ${$navigationAdmin.products ? 'text-black bg-white' : 'text-gray-600'}`}
+      class={`font-semibold py-1 px-3 rounded-md ${$navigationAdmin.products.state ? 'text-black bg-white' : 'text-gray-600'}`}
     >
       <button name="products" on:click={onClick}>Manage Products</button>
     </li>
     <li
-      class={`font-semibold py-1 px-3 rounded-md ${$navigationAdmin.orders ? 'text-black bg-white' : 'text-gray-600'}`}
+      class={`font-semibold py-1 px-3 rounded-md ${$navigationAdmin.orders.state ? 'text-black bg-white' : 'text-gray-600'}`}
     >
       <button name="orders" on:click={onClick}>Manage Orders</button>
     </li>

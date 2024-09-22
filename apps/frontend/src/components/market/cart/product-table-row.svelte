@@ -63,7 +63,7 @@
     <td class="ps-2 py-1 text-center">
       <Button
         style={'text-red-600 font-semibold border border-1 border-solid border-gray px-5'}
-        on:click={() => removeFromCart(product.title)}>Borrar</Button
+        on:click={() => removeFromCart(product.title)}>Delete</Button
       >
     </td>
   </tr>

@@ -13,7 +13,6 @@ export const getAll = async () => {
 }
 
 export const create = async (product: Omit<Product, 'image'> & { image: Express.Multer.File }) => {
-  console.log(BUCKET_URL)
 	try {
     const nameNoSpaces = product.title.replace(' ', '_')
 		const bucket = await uploadFile(nameNoSpaces, product.image)

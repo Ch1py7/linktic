@@ -13,6 +13,13 @@ interface Product {
 	image: FormData | string
 }
 
+interface AllUsers {
+  id: number
+  name: string
+  role: Role
+  edit: boolean
+}
+
 interface Orders {
 	status: boolean
 	order_id: number

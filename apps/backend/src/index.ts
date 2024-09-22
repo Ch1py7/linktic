@@ -8,6 +8,7 @@ const main = async () => {
 	const { router: auth } = await import('@/controllers/auth')
 	const { router: products } = await import('@/controllers/products')
 	const { router: orders } = await import('@/controllers/orders')
+	const { router: users } = await import('@/controllers/users')
 
 	const port = process.env.PORT || 8000
 	const app = express()
@@ -19,6 +20,7 @@ const main = async () => {
 	app.use('/api', auth)
 	app.use('/api', products)
 	app.use('/api', orders)
+	app.use('/api', users)
 
 	app.listen(port, () => {
 		console.log(`Server running on port ${port}`)
