@@ -5,7 +5,7 @@ import { instance } from './axiosInstance'
 export const listOrders = async () => {
 	try {
 		const { token } = getSession()
-		const { data, status } = await instance.get('/orders', {
+		const { data, status } = await instance.get<Orders[]>('/orders', {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},
@@ -44,6 +44,25 @@ export const cancelOrder = async (id: number) => {
 				Authorization: `Bearer ${token}`,
 			},
 		})
+		return { status }
+	} catch (e) {
+		const error = e as AxiosError
+		throw error.response?.data
+	}
+}
+
+export const updateOrder = async (id: number) => {
+	try {
+		const { token } = getSession()
+		const { status } = await instance.put(
+			'/order/update',
+			{ id },
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		)
 		return { status }
 	} catch (e) {
 		const error = e as AxiosError

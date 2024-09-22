@@ -1,22 +1,39 @@
 import { client } from './config/client'
 
 export namespace Orders {
-	export const getAll = async (id: number) => {
+	export const getAll = async (id?: number) => {
 		try {
-			const { data, error } = await client
-				.from('orders')
-				.select(`
-            status,
-            id,
-            order_products (
-              quantity,
-              product_id,
-              products (
-                title
-              )
-            )
-          `)
-				.eq('user_id', id)
+			const { data, error } =
+				typeof id === 'number'
+					? await client
+							.from('orders')
+							.select(`
+                status,
+                id,
+                order_products (
+                  quantity,
+                  product_id,
+                  products (
+                    title
+                  )
+                )
+              `)
+							.eq('user_id', id)
+							.order('id', { ascending: false })
+					: await client
+							.from('orders')
+							.select(`
+                status,
+                id,
+                order_products (
+                  quantity,
+                  product_id,
+                  products (
+                    title
+                  )
+                )
+              `)
+							.order('id', { ascending: false })
 
 			if (!data || data.length === 0) throw new Error('Products not found')
 			if (error) throw error
@@ -35,6 +52,16 @@ export namespace Orders {
 			if (data.id === 0) throw new Error('An error has occurred')
 
 			return data.id
+		} catch (e) {
+			throw new Error((e as Error).message)
+		}
+	}
+
+	export const updateOrder = async (order_id: number) => {
+		try {
+			const { error } = await client.from('orders').update({ status: true }).eq('id', order_id)
+
+			if (error) throw error
 		} catch (e) {
 			throw new Error((e as Error).message)
 		}

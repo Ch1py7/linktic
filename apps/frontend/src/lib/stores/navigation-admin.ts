@@ -17,6 +17,10 @@ export const navigationAdmin = writable<Navigation>({
 	},
 	orders: {
 		state: false,
+		subnavigation: {
+			create: false,
+			list: false,
+		},
 	},
 })
 
@@ -31,6 +35,7 @@ interface Navigation {
 	}
 	orders: {
 		state: boolean
+		subnavigation: Subnavigation
 	}
 }
 

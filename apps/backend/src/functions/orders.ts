@@ -1,6 +1,6 @@
 import { Supabase } from '@/supabase'
 
-export const getAll = async (id: number) => {
+export const getAll = async (id?: number) => {
 	try {
 		const orders = await Supabase.orders.getAll(id)
 
@@ -19,6 +19,14 @@ export const getAll = async (id: number) => {
 		})
 
 		return parsedOrders
+	} catch (e) {
+		throw new Error((e as Error).message)
+	}
+}
+
+export const update = async (order_id: number) => {
+	try {
+		await Supabase.orders.updateOrder(order_id)
 	} catch (e) {
 		throw new Error((e as Error).message)
 	}

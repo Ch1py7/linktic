@@ -95,35 +95,37 @@
       </select>
     </td>
     <td class="ps-2 py-1 text-center">
-      {#if user.edit}
-        <Button
-          style={'text-red-600 font-semibold border border-1 border-solid border-gray px-5'}
-          on:click={() => toggleEdit(index)}
-        >
-          <Icon height="1.4rem" icon={'radix-icons:cross-2'} />
-        </Button>
-      {:else}
-        <Button
-          style={'text-blue-600 font-semibold border border-1 border-solid border-gray px-5'}
-          on:click={() => toggleEdit(index)}
-        >
-          <Icon height="1.4rem" icon={'lucide:edit'} />
-        </Button>
-      {/if}
-      {#if user.edit}
-        <Button
-          style={'text-red-600 font-semibold border border-1 border-solid border-gray px-5'}
-          on:click={() => update(user, index)}
-        >
-          <Icon height="1.4rem" icon={'ic:baseline-check'} />
-        </Button>
-      {:else}
-        <Button
-          style={'text-red-600 font-semibold border border-1 border-solid border-gray px-5'}
-          on:click={() => delete_(user.id)}
-        >
-          <Icon height="1.4rem" icon={'ph:trash'} />
-        </Button>
+      {#if user.name !== 'admin'}
+        {#if user.edit}
+          <Button
+            style={'text-red-600 font-semibold border border-1 border-solid border-gray px-5'}
+            on:click={() => toggleEdit(index)}
+          >
+            <Icon height="1.4rem" icon={'radix-icons:cross-2'} />
+          </Button>
+        {:else}
+          <Button
+            style={'text-blue-600 font-semibold border border-1 border-solid border-gray px-5'}
+            on:click={() => toggleEdit(index)}
+          >
+            <Icon height="1.4rem" icon={'lucide:edit'} />
+          </Button>
+        {/if}
+        {#if user.edit}
+          <Button
+            style={'text-red-600 font-semibold border border-1 border-solid border-gray px-5'}
+            on:click={() => update(user, index)}
+          >
+            <Icon height="1.4rem" icon={'ic:baseline-check'} />
+          </Button>
+        {:else}
+          <Button
+            style={'text-red-600 font-semibold border border-1 border-solid border-gray px-5'}
+            on:click={() => delete_(user.id)}
+          >
+            <Icon height="1.4rem" icon={'ph:trash'} />
+          </Button>
+        {/if}
       {/if}
     </td>
   </tr>
