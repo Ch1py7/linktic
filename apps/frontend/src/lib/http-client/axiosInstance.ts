@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const instance = axios.create({
-	baseURL: 'http://localhost:8765/api',
+	baseURL: 'http://linktic.onrender.com/api',
 	headers: {
 		'Content-Type': 'application/json',
 	},
