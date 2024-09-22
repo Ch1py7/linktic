@@ -74,6 +74,7 @@ export type Database = {
           description: string
           id: number
           image: string
+          is_deleted: boolean
           price: number
           title: string
         }
@@ -82,6 +83,7 @@ export type Database = {
           description: string
           id?: number
           image: string
+          is_deleted?: boolean
           price: number
           title: string
         }
@@ -90,6 +92,7 @@ export type Database = {
           description?: string
           id?: number
           image?: string
+          is_deleted?: boolean
           price?: number
           title?: string
         }

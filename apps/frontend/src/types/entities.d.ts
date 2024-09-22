@@ -20,6 +20,14 @@ interface AllUsers {
   edit: boolean
 }
 
+interface AllProducts {
+	id: number
+	title: string
+	description: string
+	price: number
+  edit: boolean
+}
+
 interface Orders {
 	status: boolean
 	order_id: number

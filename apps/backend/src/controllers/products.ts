@@ -1,7 +1,7 @@
 import { verifyJwt } from '@/functions/jwt'
 import { create, delete_, getAll, update } from '@/functions/products'
 import express from 'express'
-import { body, validationResult } from 'express-validator'
+import { body, query, validationResult } from 'express-validator'
 import multer from 'multer'
 
 const storage = multer.memoryStorage()
@@ -98,7 +98,6 @@ router.put(
 			.isNumeric()
 			.withMessage('price should be a number')
 			.bail(),
-		body('image').notEmpty().withMessage('image is required'),
 	],
 	async (req: express.Request, res: express.Response) => {
 		try {
@@ -127,18 +126,19 @@ router.put(
 	}
 )
 
-router.delete(
+router.put(
 	'/products/delete',
 	body('id')
 		.notEmpty()
 		.withMessage('id is required')
 		.bail()
+		.isNumeric()
+		.withMessage('id should be a number')
+		.bail()
 		.custom(async (value) => {
-			if (value === 0) {
-				throw new Error("id can't be zero")
-			}
-		})
-		.bail(),
+			if (value === 0) throw new Error("id can't be zero")
+			if (value === '0') throw new Error("id can't be zero")
+		}),
 	async (req: express.Request, res: express.Response) => {
 		try {
 			const errors = validationResult(req)
@@ -157,7 +157,7 @@ router.delete(
 
 			const { id } = req.body
 
-			await delete_(id)
+			await delete_(Number(id))
 
 			res.status(200).send()
 		} catch (e) {

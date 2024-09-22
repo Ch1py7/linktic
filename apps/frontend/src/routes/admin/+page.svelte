@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import FormCreateProduct from '@/components/admin/form-create-product.svelte'
+  import FormCreateProduct from '@/components/admin/products/form-create-product.svelte'
   import FormCreateUser from '@/components/admin/users/form-create-user.svelte'
   import Navbar from '@/components/admin/navbar.svelte'
   import Subnavbar from '@/components/admin/subnavbar.svelte'
@@ -9,6 +9,7 @@
   import { navigationAdmin } from '@/lib/stores/navigation-admin'
   import { onMount } from 'svelte'
   import ListUsers from '@/components/admin/users/list-users.svelte'
+  import ListProducts from '@/components/admin/products/list-products.svelte'
 
   onMount(() => {
     const { email } = getSession()
@@ -32,8 +33,8 @@
         <FormCreateUser />
       {/if}
     {:else if $navigationAdmin.products.state}
-      {#if $navigationAdmin.products.subnavigation.create}
-        <div></div>
+      {#if $navigationAdmin.products.subnavigation.list}
+        <ListProducts />
       {/if}
       {#if $navigationAdmin.products.subnavigation.create}
         <FormCreateProduct />

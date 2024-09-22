@@ -6,6 +6,8 @@ export namespace Products {
 			const { data, error } = await client
 				.from('products')
 				.select('id, title, description, price, image')
+				.eq('is_deleted', false)
+				.order('id', { ascending: false })
 
 			if (error) throw error
 			if (!data) throw new Error('Product not found')
@@ -33,7 +35,7 @@ export namespace Products {
 	}
 	export const delete_ = async (id: number) => {
 		try {
-			const { error } = await client.from('products').delete().eq('id', id)
+			const { error } = await client.from('products').update({ is_deleted: true }).eq('id', id)
 			if (error) throw error
 		} catch (e) {
 			throw new Error((e as Error).message)
