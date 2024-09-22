@@ -10,7 +10,7 @@ export const getAll = async (id?: number) => {
 				status: order.status,
 				order_products: order.order_products.map((op) => {
 					return {
-						title: op.products!.title,
+						title: op.products!.title.replace('_', ' '),
 						product_id: op.product_id,
 						quantity: op.quantity,
 					}
