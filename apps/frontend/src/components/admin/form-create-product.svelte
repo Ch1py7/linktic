@@ -6,7 +6,7 @@
 
   let loading = false
   let productCreated = ''
-  let imagePreview: string | null = null
+  let imagePreview = ''
   let errors: string[] = []
   let product: Product = {
     title: '',
@@ -14,9 +14,11 @@
     price: 0,
     image: '',
   }
+  const formData = new FormData()
 
   const onInput = (event: Event) => {
     const { value, name } = event.target as HTMLInputElement
+
     product = {
       ...product,
       [name]: value,
@@ -33,9 +35,10 @@
 
       imagePreview = URL.createObjectURL(image)
 
+      formData.set('image', image)
       product = {
         ...product,
-        image: imagePreview,
+        image: formData,
       }
     }
   }
@@ -44,7 +47,14 @@
     try {
       loading = true
       errors = []
-      const { status } = await create(product)
+
+      formData.set('title', product.title)
+      formData.set('price', product.price.toString())
+      formData.set('description', product.description)
+
+      product.image = formData
+
+      const { status } = await create(product.image as FormData)
       if (status === 201) {
         product = {
           description: '',
@@ -61,6 +71,9 @@
     } finally {
       loading = false
 
+      URL.revokeObjectURL(imagePreview)
+      imagePreview = ''
+
       setTimeout(() => {
         productCreated = ''
       }, 3000)
@@ -68,7 +81,7 @@
   }
 </script>
 
-<form on:submit|preventDefault={onSubmit} class="flex flex-col gap-2">
+<form on:submit|preventDefault={onSubmit} class="flex flex-col gap-2" enctype="multipart/form-data">
   {#if errors.length > 0}
     <div>
       {#each errors as error}
@@ -80,9 +93,9 @@
     <p class="text-green-500 text-ellipsis">{productCreated}</p>
   {/if}
   <div class="flex flex-col items-center">
-    {#if product.image}
+    {#if imagePreview !== ''}
       <div
-        style={`background: url(${product.image}); background-size: cover; background-repeat: no-repeat; aspect-ratio: 1 / 1;`}
+        style={`background: url(${imagePreview}); background-size: cover; background-repeat: no-repeat; aspect-ratio: 1 / 1;`}
         class="rounded-xl h-72 w-72 mb-10"
       ></div>
     {/if}

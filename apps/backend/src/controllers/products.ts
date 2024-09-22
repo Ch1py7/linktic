@@ -2,6 +2,10 @@ import { verifyJwt } from '@/functions/jwt'
 import { create, delete_, getAll, update } from '@/functions/products'
 import express from 'express'
 import { body, validationResult } from 'express-validator'
+import multer from 'multer'
+
+const storage = multer.memoryStorage()
+const upload = multer({ storage })
 
 const router = express.Router()
 
@@ -24,40 +28,10 @@ router.get('/products', async (req: express.Request, res: express.Response) => {
 
 router.post(
 	'/products/create',
-	[
-		body('title')
-			.notEmpty()
-			.withMessage("product name can't be empty")
-			.bail()
-			.isString()
-			.withMessage('product name should be a string')
-			.bail(),
-		body('description')
-			.notEmpty()
-			.withMessage("description can't be empty")
-			.bail()
-			.isString()
-			.withMessage('description should be a string')
-			.bail(),
-		body('price')
-			.notEmpty()
-			.withMessage('price is required')
-			.bail()
-			.isNumeric()
-			.withMessage('price should be a number')
-			.bail()
-			.custom(async (value) => {
-				if (value === 0) {
-					throw new Error("price can't be zero")
-				}
-			})
-			.bail(),
-		body('image').notEmpty().withMessage('image is required').bail(),
-	],
+	upload.single('image'),
 	async (req: express.Request, res: express.Response) => {
 		try {
 			const errors = validationResult(req)
-
 			if (!errors.isEmpty()) {
 				const error = errors.array().map((e) => e.msg)
 				return res.status(400).json(error)
@@ -67,14 +41,23 @@ router.post(
 			const payload = verifyJwt<{ sub: number; exp: number; role: 'admin' | 'user' }>(token)
 
 			if (Date.now() > payload.exp * 1000) {
-				return res.status(401).send(['token expired'])
+				return res.status(401).send(['Token expired'])
 			}
 
-			const { title, description, price, image } = req.body
+			const { title, price, description } = req.body as {
+				title: string
+				price: number
+				description: string
+			}
+			const image = req.file!
 
-			await create({ title, description, price, image })
+			if (!title || !price || !description || !image) {
+				return res.status(400).send(['Missing required fields'])
+			}
 
-			res.status(201).send()
+			await create({ description, price, title, image })
+
+			return res.status(201).send({ message: 'Product created successfully' })
 		} catch (e) {
 			res.status(400).send([(e as Error).message])
 		}

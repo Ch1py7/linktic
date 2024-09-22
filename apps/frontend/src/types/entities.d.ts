@@ -10,7 +10,7 @@ interface Product {
 	title: string
 	description: string
 	price: number
-	image: string
+	image: FormData | string
 }
 
 interface Orders {
