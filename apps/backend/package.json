@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+  "start": "cross-env NODE_ENV=production node dist/index.js",
   "build": "tsc",
-  "start": "cross-env NODE_ENV=production node dist/index.js"
+  "tscs": "pnpm build && pnpm start"
   },
   "keywords": [],
   "author": "",
