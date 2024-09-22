@@ -1,0 +1,510 @@
+{
+	"info": {
+		"_postman_id": "80055489-a6d1-4398-b3ef-c0410d6b66bc",
+		"name": "Linktic",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29975390"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNjk1NDY4NywiZXhwIjoxNzI5NTQ2Njg3fQ.iEjL57Nuqa-0YahqH7iO76vDqeggmv-ZfEdvzzjMHlk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"user\",\r\n    \"password\": \"user\",\r\n    \"email\": \"user@test.com\",\r\n    \"role\": \"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://linktic.onrender.com/api/auth/register",
+							"protocol": "https",
+							"host": [
+								"linktic",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNjk1NDY4NywiZXhwIjoxNzI5NTQ2Njg3fQ.iEjL57Nuqa-0YahqH7iO76vDqeggmv-ZfEdvzzjMHlk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"user\",\r\n    \"email\": \"user@test.com\",\r\n    \"role\": \"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://linktic.onrender.com/api/auth/login",
+							"protocol": "https",
+							"host": [
+								"linktic",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "orders",
+			"item": [
+				{
+					"name": "list",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNjk1NDY4NywiZXhwIjoxNzI5NTQ2Njg3fQ.iEjL57Nuqa-0YahqH7iO76vDqeggmv-ZfEdvzzjMHlk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://linktic.onrender.com/api/orders",
+							"protocol": "https",
+							"host": [
+								"linktic",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNjk1NDY4NywiZXhwIjoxNzI5NTQ2Njg3fQ.iEjL57Nuqa-0YahqH7iO76vDqeggmv-ZfEdvzzjMHlk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"order_id\": 1,\r\n    \"user_id\": 1,\r\n    \"products\": [\r\n        {\r\n            \"product_id\": 1,\r\n            \"quantity\": 1\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://linktic.onrender.com/api/order/create",
+							"protocol": "https",
+							"host": [
+								"linktic",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"order",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNjk1NDY4NywiZXhwIjoxNzI5NTQ2Njg3fQ.iEjL57Nuqa-0YahqH7iO76vDqeggmv-ZfEdvzzjMHlk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://linktic.onrender.com/api/order/cancel?id=1",
+							"protocol": "https",
+							"host": [
+								"linktic",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"order",
+								"cancel"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNjk1NDY4NywiZXhwIjoxNzI5NTQ2Njg3fQ.iEjL57Nuqa-0YahqH7iO76vDqeggmv-ZfEdvzzjMHlk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://linktic.onrender.com/api/order/update",
+							"protocol": "https",
+							"host": [
+								"linktic",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"order",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "list",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNjk1NDY4NywiZXhwIjoxNzI5NTQ2Njg3fQ.iEjL57Nuqa-0YahqH7iO76vDqeggmv-ZfEdvzzjMHlk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://linktic.onrender.com/api/products",
+							"protocol": "https",
+							"host": [
+								"linktic",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNjk1NDY4NywiZXhwIjoxNzI5NTQ2Njg3fQ.iEjL57Nuqa-0YahqH7iO76vDqeggmv-ZfEdvzzjMHlk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "title",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "24",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "description",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "AsUKPlYJZ/huevo-828x548.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://linktic.onrender.com/api/products/create",
+							"protocol": "https",
+							"host": [
+								"linktic",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"products",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"title\": \"title\",\r\n    \"description\": \"description\",\r\n    \"price\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://linktic.onrender.com/api/products/update",
+							"protocol": "https",
+							"host": [
+								"linktic",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"products",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNjk1NDY4NywiZXhwIjoxNzI5NTQ2Njg3fQ.iEjL57Nuqa-0YahqH7iO76vDqeggmv-ZfEdvzzjMHlk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://linktic.onrender.com/api/products/cancel?id=1",
+							"protocol": "https",
+							"host": [
+								"linktic",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"products",
+								"cancel"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "cancel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNjk1NDY4NywiZXhwIjoxNzI5NTQ2Njg3fQ.iEjL57Nuqa-0YahqH7iO76vDqeggmv-ZfEdvzzjMHlk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://linktic.onrender.com/api/users/delete?id=1",
+							"protocol": "https",
+							"host": [
+								"linktic",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"users",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://linktic.onrender.com/api/users",
+							"protocol": "https",
+							"host": [
+								"linktic",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"user\",\r\n    \"role\": \"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://linktic.onrender.com/api/users/update",
+							"protocol": "https",
+							"host": [
+								"linktic",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"users",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
